@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Codmother Fish & Chips — Fisherman's Wharf, San Francisco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ink: #0e0d0b;
+    --cream: #faf6ef;
+    --warm: #f2e8d5;
+    --navy: #0d1f3c;
+    --gold: #c8902e;
+    --gold-light: #f0c96a;
+    --rust: #c94a1a;
+    --white: #ffffff;
+    --muted: #5a5650;
+    --border: rgba(14,13,11,0.12);
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'Playfair Display', Georgia, serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 5%;
+    background: rgba(13,31,60,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,144,46,0.25);
+  }
+  .nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.nav-logo img {
+  height: 70px;
+  width: auto;
+  display: block;
+}
+
+.nav-logo span {
+  display: none;
+}
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.72); font-size: 0.82rem; text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    padding: 0.65rem 1.5rem;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #b07824; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--gold-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; align-items: flex-end;
+    padding: 0 5% 8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;background: url('./images/hero.png') center/cover no-repeat;
+    
+    opacity: 0.42;
+  }
+  .hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,31,60,0.88) 25%, rgba(13,31,60,0.48) 100%);
+}
+  .hero-content { position: relative; z-index: 2; max-width: 740px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: rgba(200,144,46,0.15);
+    border: 1px solid rgba(200,144,46,0.4);
+    color: var(--gold-light);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 1.8rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 1.4rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2.4rem;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--white);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 2px solid var(--gold);
+    padding: 1rem 2.2rem;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #b07824; border-color: #b07824; }
+  .btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    padding: 1rem 2rem;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold-light); color: var(--gold-light); }
+  .hero-badge {
+  display: none;
+}
+
+  /* ── TICKER ── */
+  .ticker {
+    background: var(--gold);
+    padding: 0.7rem 0;
+    overflow: hidden;
+  }
+  .ticker-track {
+    display: flex; gap: 0;
+    animation: ticker 28s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    padding: 0 2.5rem;
+    border-right: 1px solid rgba(13,31,60,0.2);
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── SECTION HELPERS ── */
+  section { padding: 6rem 5%; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.12;
+    color: var(--ink);
+  }
+  .section-title.light { color: var(--white); }
+
+  /* ── WHY US ── */
+  .why { background: var(--cream); }
+  .why-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .why-left { position: sticky; top: 6rem; }
+  .why-left p { color: var(--muted); font-size: 1rem; line-height: 1.75; margin-top: 1.2rem; max-width: 400px; }
+  .why-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .pill {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .why-right { display: flex; flex-direction: column; gap: 0; }
+  .why-item {
+    display: flex; gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .why-item:first-child { padding-top: 0; }
+  .why-num {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(200,144,46,0.25);
+    line-height: 1;
+    min-width: 2.5rem;
+  }
+  .why-body h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; }
+  .why-body p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── MENU ── */
+  .menu { background: var(--navy); }
+  .menu-inner { max-width: 1100px; margin: 0 auto; }
+  .menu-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+  .menu-header .section-label { color: var(--gold-light); opacity: 0.7; }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.06); }
+  .menu-card {
+    background: rgba(255,255,255,0.03);
+    padding: 2.2rem;
+    transition: background 0.25s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .menu-card:hover::before { transform: scaleX(1); }
+  .menu-card:hover { background: rgba(200,144,46,0.07); }
+  .menu-card-icon { font-size: 1.8rem; margin-bottom: 1rem; line-height: 1; }
+  .menu-card h3 { font-family: var(--serif); font-size: 1.3rem; color: var(--white); margin-bottom: 0.5rem; }
+  .menu-card p { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.65; margin-bottom: 1.2rem; }
+  .menu-card-tag {
+    display: inline-block;
+    background: rgba(200,144,46,0.15);
+    border: 1px solid rgba(200,144,46,0.3);
+    color: var(--gold-light);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+  }
+  .menu-card.featured { background: rgba(200,144,46,0.1); }
+  .menu-card.featured::before { transform: scaleX(1); }
+  .menu-order-cta { text-align: center; margin-top: 3.5rem; }
+  .menu-order-cta p { color: rgba(255,255,255,0.45); font-size: 0.85rem; margin-bottom: 1rem; }
+
+  /* ── EXPERIENCE ── */
+  .experience { background: var(--warm); }
+  .experience-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center; }
+  .exp-visual {
+    position: relative;
+    height: 500px;
+  }
+  .exp-img-main {
+  position: absolute; top: 0; left: 0;
+  width: 78%; height: 78%;
+  background: url('./images/food-main.png') center/cover no-repeat;
+  border-radius: 2px;
+}
+  .exp-img-accent {
+  position: absolute; bottom: 0; right: 0;
+  width: 52%; height: 52%;
+  background: url('./images/food-secondary.png') center/cover no-repeat;
+  border-radius: 2px;
+  border: 4px solid var(--warm);
+}
+  .exp-stat {
+    position: absolute; top: 42%; left: 64%;
+    background: var(--navy);
+    color: var(--white);
+    padding: 1.2rem 1.5rem;
+    border-radius: 2px;
+    text-align: center;
+    border-top: 3px solid var(--gold);
+    z-index: 2;
+  }
+  .exp-stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 900; color: var(--gold-light); line-height: 1; }
+  .exp-stat-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 0.3rem; }
+  .exp-text p { color: var(--muted); font-size: 1rem; line-height: 1.8; margin-top: 1.3rem; margin-bottom: 1.5rem; }
+  .exp-facts { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem; }
+  .exp-fact { display: flex; align-items: center; gap: 0.8rem; font-size: 0.88rem; color: var(--muted); }
+  .exp-fact-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+  /* ── SOCIAL PROOF ── */
+  .proof { background: var(--ink); }
+  .proof-inner { max-width: 1100px; margin: 0 auto; }
+  .proof-header { text-align: center; margin-bottom: 3.5rem; }
+  .proof-header .section-label { color: var(--gold-light); opacity: 0.6; }
+  .proof-stars { display: flex; justify-content: center; gap: 4px; margin-bottom: 0.8rem; }
+  .proof-stars span { color: var(--gold); font-size: 1rem; }
+  .proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5px; background: rgba(255,255,255,0.04); }
+  .proof-card {
+    background: var(--ink);
+    padding: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .proof-quote { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 1.2rem; }
+  .proof-author { display: flex; align-items: center; gap: 0.8rem; }
+  .proof-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.75rem; color: var(--navy);
+    flex-shrink: 0;
+  }
+  .proof-name { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+  .proof-source { font-size: 0.7rem; color: var(--gold); margin-top: 0.15rem; letter-spacing: 0.05em; }
+  .proof-logos { display: flex; justify-content: center; align-items: center; gap: 3rem; margin-top: 3.5rem; flex-wrap: wrap; }
+  .proof-logo-item { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: rgba(255,255,255,0.2); }
+
+  /* ── URGENCY ── */
+  .urgency { background: var(--rust); padding: 5rem 5%; }
+  .urgency-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .urgency h2 { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 1.2rem; }
+  .urgency p { color: rgba(255,255,255,0.75); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+  .urgency-notice { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.9); padding: 0.5rem 1.2rem; border-radius: 2px; font-size: 0.8rem; margin-bottom: 1.8rem; }
+  .btn-white {
+    background: var(--white);
+    color: var(--rust);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 2px solid var(--white);
+    padding: 1rem 2.5rem;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-white:hover { background: transparent; color: var(--white); }
+
+  /* ── FAQ ── */
+  .faq { background: var(--cream); }
+  .faq-inner { max-width: 760px; margin: 0 auto; }
+  .faq-header { margin-bottom: 3rem; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q {
+    width: 100%; text-align: left;
+    padding: 1.4rem 0;
+    font-size: 0.95rem; font-weight: 500;
+    color: var(--ink);
+    background: none; border: none; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem;
+  }
+  .faq-q:hover { color: var(--gold); }
+  .faq-toggle { font-size: 1.2rem; color: var(--gold); flex-shrink: 0; transition: transform 0.25s; }
+  .faq-a { font-size: 0.88rem; color: var(--muted); line-height: 1.75; padding-bottom: 1.4rem; display: none; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+  .faq-allergy {
+    background: #fff8ee;
+    border: 1px solid rgba(200,144,46,0.3);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.85rem;
+    color: #6b4800;
+    line-height: 1.7;
+  }
+  .faq-allergy strong { display: block; margin-bottom: 0.4rem; font-size: 0.9rem; }
+
+  /* ── CONTACT / LOCATION ── */
+  .contact { background: var(--navy); }
+  .contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-info .section-label { color: var(--gold-light); opacity: 0.7; }
+  .contact-details { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.4rem; }
+  .contact-row { display: flex; gap: 1rem; }
+  .contact-row-icon { color: var(--gold); font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .contact-row-body h4 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.3rem; }
+  .contact-row-body p, .contact-row-body a { font-size: 0.95rem; color: rgba(255,255,255,0.82); text-decoration: none; }
+  .contact-row-body a:hover { color: var(--gold-light); }
+  .hours-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem 1.5rem; margin-top: 0.5rem; }
+  .hours-day { font-size: 0.85rem; color: rgba(255,255,255,0.4); }
+  .hours-time { font-size: 0.85rem; color: rgba(255,255,255,0.82); }
+  .hours-time.closed { color: rgba(255,255,255,0.25); text-decoration: line-through; }
+  .contact-map {
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    height: 380px;
+  }
+  .contact-map iframe { width: 100%; height: 100%; border: none; filter: grayscale(0.4) contrast(1.1); }
+  .contact-note { margin-top: 1.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.3); line-height: 1.6; }
+  .contact-note a { color: var(--gold-light); opacity: 0.7; }
+
+  /* ── FOOTER ── */
+  footer { background: #070e1c; border-top: 1px solid rgba(255,255,255,0.05); padding: 3rem 5%; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+.footer-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.footer-brand img {
+  height: 68px;
+  width: auto;
+  display: block;
+}
+
+.footer-brand span {
+  display: none;
+}
+  .footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .why-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .why-left { position: static; }
+  .experience-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .exp-visual { height: 280px; }
+  .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero { padding: 0 5% 5rem; }
+  .hero-badge { display: none; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { justify-content: center; }
+  section { padding: 4rem 5%; }
+  .nav-logo img { height: 42px; }
+  .footer-brand img { height: 56px; }
+}
+  .mobile-sticky-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-sticky-cta {
+    display: flex;
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 999;
+    justify-content: center;
+  }
+
+  .mobile-sticky-cta a {
+    width: 100%;
+    text-align: center;
+    background: var(--gold);
+    color: var(--white);
+    text-decoration: none;
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  }
+
+  body {
+    padding-bottom: 88px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+  <img src="./images/logo.png" alt="The Codmother Fish & Chips logo">
+</a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#experience">Visit</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://codmother.com/order-online" class="nav-cta">Order Now</a>
+  <div class="hamburger" onclick="toggleMenu(this)">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Fisherman's Wharf · Est. 2011</div>
+    <h1>Some of San Francisco’s Best<br><em>Fish &amp; Chips</em><br>at Fisherman’s Wharf.</h1>
+    <p class="hero-sub">Wild-caught Alaskan cod, crispy batter, and a local favorite at Fisherman’s Wharf. Order ahead or stop by for one of San Francisco’s most talked-about seafood spots.</p>
+    <div class="hero-actions">
+      <a href="https://codmother.com/order-online" class="btn-primary">Order Online Now</a>
+      <a href="#menu" class="btn-ghost">See the Menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Wild-Caught Alaskan Cod</span>
+    <span class="ticker-item">Homemade Baja Sauce</span>
+    <span class="ticker-item">New England Clam Chowder</span>
+    <span class="ticker-item">Outdoor Waterfront Seating</span>
+    <span class="ticker-item">Online Ordering Available</span>
+    <span class="ticker-item">Fisherman's Wharf Institution</span>
+    <span class="ticker-item">Featured in SFGATE</span>
+    <span class="ticker-item">Wild-Caught Alaskan Cod</span>
+    <span class="ticker-item">Homemade Baja Sauce</span>
+    <span class="ticker-item">New England Clam Chowder</span>
+    <span class="ticker-item">Outdoor Waterfront Seating</span>
+    <span class="ticker-item">Online Ordering Available</span>
+    <span class="ticker-item">Fisherman's Wharf Institution</span>
+    <span class="ticker-item">Featured in SFGATE</span>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-inner">
+    <div class="why-left">
+      <p class="section-label">Why The Codmother</p>
+      <h2 class="section-title">Not just a food truck.<br>A San Francisco<br>landmark.</h2>
+      <p>For over a decade, we've been serving the real thing — no shortcuts, no compromises. Come hungry. Leave obsessed.</p>
+      <div class="why-pills">
+        <span class="pill">No reservations needed</span>
+        <span class="pill">First come, first served</span>
+        <span class="pill">Outdoor patio seating</span>
+        <span class="pill">Order online for pickup</span>
+      </div>
+    </div>
+    <div class="why-right">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div class="why-body">
+          <h3>The Real Deal</h3>
+          <p>Born from a love of traditional British chippies. Wild-caught Alaskan cod, battered fresh daily — never frozen, never rushed.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div class="why-body">
+          <h3>A Menu That Surprises</h3>
+          <p>Crispy classics meet SF-inspired originals: our fish tacos with homemade Baja sauce have their own loyal following.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div class="why-body">
+          <h3>The Setting Is Part of the Meal</h3>
+          <p>Steps from the Bay. Eating fish &amp; chips at Fisherman's Wharf isn't just lunch — it's the experience you'll talk about later.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div class="why-body">
+          <h3>15 Years of Consistency</h3>
+          <p>Featured in SFGATE. Rated best in SF. Survived a pandemic. We're still here because the food is genuinely that good.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-inner">
+    <div class="menu-header">
+      <div>
+        <p class="section-label">What We're Known For</p>
+        <h2 class="section-title light">The Menu.</h2>
+      </div>
+      <a href="https://codmother.com/order-online" class="btn-primary">View Full Menu &amp; Order</a>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card featured">
+        <div class="menu-card-icon">🐟</div>
+        <h3>Fish &amp; Chips</h3>
+        <p>Wild-caught Alaskan cod in our signature golden batter, served with crispy chips and house tartar sauce. The one that started it all.</p>
+        <span class="menu-card-tag">Our Signature</span>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🌮</div>
+        <h3>Fish Tacos</h3>
+        <p>Crispy battered cod in warm tortillas, topped with our legendary homemade Baja sauce — a cult favourite that needs no introduction.</p>
+        <span class="menu-card-tag">Fan Favourite</span>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🍤</div>
+        <h3>Shrimp Tacos</h3>
+        <p>Juicy shrimp, crisp batter, fresh slaw, and that Baja sauce. The taco you'll order twice without thinking twice.</p>
+        <span class="menu-card-tag">Crowd Pleaser</span>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🍲</div>
+        <h3>New England Clam Chowder</h3>
+        <p>A rich, creamy 16oz bowl that's earned praise from food blogs and media alike. At the Wharf, in a proper bowl — you have to.</p>
+        <span class="menu-card-tag">As Seen in Media</span>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🍟</div>
+        <h3>Chips Gone Wild</h3>
+        <p>Upgrade your standard fries to loaded flavour combinations. Because plain chips are so last season. +$3.50</p>
+        <span class="menu-card-tag">Upgrade Available</span>
+      </div>
+      <div class="menu-card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:1rem;padding:2.5rem;">
+        <p style="color:rgba(255,255,255,0.45);font-size:0.88rem;line-height:1.7;">Ready to eat? Order online for fast pickup — no waiting in line for the food, only the good stuff.</p>
+        <a href="https://codmother.com/order-online" class="btn-primary">Order Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE / LOCATION -->
+<section class="experience" id="experience">
+  <div class="experience-inner">
+    <div class="exp-visual">
+      <div class="exp-img-main"></div>
+      <div class="exp-img-accent"></div>
+      <div class="exp-stat">
+        <div class="exp-stat-num">15+</div>
+        <div class="exp-stat-label">Years at the Wharf</div>
+      </div>
+    </div>
+    <div class="exp-text">
+      <p class="section-label">The Experience</p>
+      <h2 class="section-title">Where the Bay meets<br>the best fish in SF.</h2>
+      <p>You're not just getting lunch. You're sitting steps from the San Francisco Bay, paper basket in hand, doing the thing every great SF trip deserves. No pretense. Just exceptional food, fresh air, and the kind of view that makes food taste even better.</p>
+      <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.75; margin-top: -0.2rem;">We're a food truck done right — permanent, beloved, and impossible to miss at 496 Beach Street, right at the heart of Fisherman's Wharf.</p>
+      <div class="exp-facts">
+        <div class="exp-fact"><span class="exp-fact-dot"></span> Outdoor patio seating — first come, first served</div>
+        <div class="exp-fact"><span class="exp-fact-dot"></span> No reservations, no phone orders — just show up</div>
+        <div class="exp-fact"><span class="exp-fact-dot"></span> Online takeout ordering available for pickup</div>
+        <div class="exp-fact"><span class="exp-fact-dot"></span> Located next to Fisherman's Wharf Parking (452 Beach St)</div>
+      </div>
+      <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="https://codmother.com/order-online" class="btn-primary">Order Pickup Online</a>
+        <a href="https://maps.google.com/?q=496+Beach+St,+San+Francisco" class="btn-ghost" style="color: var(--ink); border-color: rgba(14,13,11,0.25);" target="_blank">Get Directions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof" id="reviews">
+  <div class="proof-inner">
+    <div class="proof-header">
+      <p class="section-label">What People Are Saying</p>
+      <div class="proof-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <h2 class="section-title light">Locals swear by it.<br>Tourists never forget it.</h2>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <p class="proof-quote">"I live in SF and this is genuinely the best fish and chips I've had outside of England. The cod is perfect — light batter, flaky inside. Don't skip the chowder."</p>
+        <div class="proof-author">
+          <div class="proof-avatar">JM</div>
+          <div>
+            <div class="proof-name">James M.</div>
+            <div class="proof-source">Google Review ★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <p class="proof-quote">"The fish tacos with Baja sauce are something else. We drove 45 minutes from the East Bay just for these. Worth every minute of traffic."</p>
+        <div class="proof-author">
+          <div class="proof-avatar">LR</div>
+          <div>
+            <div class="proof-name">Laura R.</div>
+            <div class="proof-source">Yelp ★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <p class="proof-quote">"A must-visit at Fisherman's Wharf. Huge portions, fair prices, and the cod is wild-caught fresh. Came back three days in a row during our trip."</p>
+        <div class="proof-author">
+          <div class="proof-avatar">AT</div>
+          <div>
+            <div class="proof-name">Alex T.</div>
+            <div class="proof-source">TripAdvisor ★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="proof-logos">
+      <span class="proof-logo-item">SFGATE</span>
+      <span class="proof-logo-item">Yelp Top 100</span>
+      <span class="proof-logo-item">TripAdvisor</span>
+      <span class="proof-logo-item">Bay Area Foodie</span>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY -->
+<section class="urgency" id="order">
+  <div class="urgency-inner">
+    <h2>Order ahead or stop by early.</h2>
+    <p>Outdoor seating is first come, first served. Order online for pickup to save time, or visit in person and enjoy one of Fisherman’s Wharf’s favorite seafood stops.</p>
+    <div>
+      <div class="urgency-notice">⏱ Online ordering available now — order ahead for faster pickup</div>
+    </div>
+    <a href="https://codmother.com/order-online" class="btn-white">Order Online Now</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <p class="section-label">Know Before You Go</p>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-allergy">
+      <strong>⚠️ Allergy &amp; Dietary Notice</strong>
+      We fry using premium soybean oil. Fish and shrimp are cooked in the same oil — cross-contact with shellfish is possible. If you have a shellfish allergy, we strongly advise against consuming our products. Our kitchen is nut-free. Batters contain no alcohol. Please inform staff of any allergies before ordering.
+    </div>
+    <div class="faq-item open">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What type of fish do you use?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">Wild-caught Codfish from Alaska. Every time.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is the fish beer-battered?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">No. We don't use any alcohol in our batter.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do you offer gluten-free options?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">French fries are the only gluten-free item. All other items are battered in all-purpose flour.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Does the clam chowder contain pork or bacon?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">No — our clam chowder contains no pork-derived products whatsoever.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What oil do you use for frying?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">Premium clear-frying soybean oil. Ingredients: Soybean oil, TBHQ and citric acid (to preserve freshness), Dimethylpolysiloxane. No peanuts or nuts.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What's in the homemade Baja sauce?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">Sour cream, cilantro, Mexican spices, and Tapatío hot sauce. Contains dairy.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I upgrade my fries?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">Yes — upgrade to any of the Chips Gone Wild options for an additional $3.50. You can also add an extra piece of cod to your Fish &amp; Chips order for $7.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do tacos come with fries?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">Tacos don't come with fries. You can add a small side for $4 or a regular for $6.99. Extra Baja sauce is available for $2.50.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is parking available nearby?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a">We don't validate parking. There's paid street parking and private lots in the Fisherman's Wharf area. We're located right next to the Fisherman's Wharf Parking Lot at 452 Beach St. Please remove all valuables from your vehicle.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / LOCATION -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <p class="section-label">Find Us</p>
+      <h2 class="section-title light">Come visit.<br>We'll be here.</h2>
+      <div class="contact-details">
+        <div class="contact-row">
+          <div class="contact-row-icon">📍</div>
+          <div class="contact-row-body">
+            <h4>Address</h4>
+            <p>496 Beach St, San Francisco, CA 94133</p>
+            <p style="font-size:0.8rem;color:rgba(255,255,255,0.35);margin-top:0.2rem;">Fisherman's Wharf · Corner of Beach &amp; Jones</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">📞</div>
+          <div class="contact-row-body">
+            <h4>Phone</h4>
+            <a href="tel:4156069349">(415) 606-9349</a>
+            <p style="font-size:0.78rem;color:rgba(255,255,255,0.3);margin-top:0.2rem;">No phone orders — for inquiries only</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">✉️</div>
+          <div class="contact-row-body">
+            <h4>Email</h4>
+            <a href="mailto:contact@codmother.com">contact@codmother.com</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">🕐</div>
+          <div class="contact-row-body">
+            <h4>Hours</h4>
+            <div class="hours-grid">
+              <span class="hours-day">Mon – Tue</span><span class="hours-time">11:30am – 6:00pm</span>
+              <span class="hours-day">Wednesday</span><span class="hours-time closed">Closed</span>
+              <span class="hours-day">Thu – Sun</span><span class="hours-time">11:30am – 6:00pm</span>
+            </div>
+            <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:0.7rem;">Hours may vary — always check Google Maps for live updates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="contact-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3152.5!2d-122.4194!3d37.8083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808f1f39a2b9%3A0x1!2s496+Beach+St%2C+San+Francisco%2C+CA+94133!5e0!3m2!1sen!2sus!4v1"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <p class="contact-note">
+        Parking available next door at <a href="#">452 Beach St (Fisherman's Wharf Parking Lot)</a>. Street parking also available — remove all valuables from your vehicle.
+      </p>
+      <div style="margin-top:1.5rem;">
+        <a href="https://codmother.com/order-online" class="btn-primary">Order for Pickup →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#home" class="footer-brand">
+  <img src="./images/logo.png" alt="The Codmother Fish & Chips logo">
+</a>
+    <ul class="footer-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://codmother.com/order-online">Order Online</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 The Codmother Fish &amp; Chips. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+}
+function toggleMenu(el) {
+  const links = document.querySelector('.nav-links');
+  if (links) {
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'fixed';
+    links.style.top = '64px';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.background = 'rgba(13,31,60,0.98)';
+    links.style.padding = '1.5rem 5%';
+    links.style.gap = '1.5rem';
+  }
+}
+</script>
+<div class="mobile-sticky-cta">
+  <a href="https://codmother.com/order-online">Order Now</a>
+</div>
+</body>
+</html>
